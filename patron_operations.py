@@ -11,6 +11,12 @@ class LibraryPatron:
     # setter for private attribute
     def set_library_id(self, protected_id):
         self.__library_id = protected_id
+
+    def borrow_book(self, book_title):
+        self.borrowed_books.append(book_title)
+
+    def list_borrowed_books(self):
+        return self.borrowed_books
     
     # Need the ability to list borrowed books by customer!
     # also need to figure out how to tie library_id to check out and return processes
@@ -31,11 +37,11 @@ class PatronOperations:
     def display_all_patrons(self):  
         for patron in self.patron_list:
             print(f"\nName: {patron.name} \nLibrary ID: ******{patron.get_library_id()[6:]}"
-                  f"\nBorrowed Books: ")  # Figure out how to print a list of borrowed titles
+                  f"\nBorrowed Books: {patron.list_borrowed_books()}")  # Figure out how to print a list of borrowed titles
             
     def export_patrons_to_file(self, filename):
         with open(filename, 'a') as file:
             for patron in self.patron_list:
                 file.write(f"\nName: {patron.name} \nLibrary ID: ******{patron.get_library_id()[6:]}"
-                            f"\nBooks borrowed: HOW???\n")
+                            f"\nBooks borrowed: {patron.list_borrowed_books()}?\n")
             print("Patron list successfully exported to 'patron_details.txt'")

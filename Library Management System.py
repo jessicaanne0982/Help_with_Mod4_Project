@@ -40,18 +40,13 @@ def main():
                         print(f"{title} has been added to the Library Catalog.")
 ###################################################################################################################################
                     elif book_menu_option == '2': # Borrow a book 
-                        # I'm able to search for borrower name and match it to a name in the patron_list
-                        # but when I get to the point that it "unpacks" the name, library_id, and borrowed_books
-                        # I get an Attribute error stating that tuple object has no attibute '.items'
                         borrower_name = input("Enter the name of the patron borrowing the book: ") #
                         borrower = patron_list.search_for_patron(borrower_name)
                         if borrower:
                             title = input("Enter the title of the book to borrow: ")
                             if catalog.checkout(title): # Checking if title is available to borrow
-                                for patron in patron_list.__dict__.items(): # Not sure if this is the right way but able to iterate now
-                                    for name, library_id, borrowed_books in patron.items(): # Error here... can't use .items() with tuples
-                                        if name == borrower_name:
-                                           borrowed_books.append(title, author)
+                                borrower.borrow_book(title)
+                                print(f"{title} has been successfully borrowed by {borrower_name}")
                         else:
                             print("This patron was not found in the library system.")
 ###################################################################################################################################                                
@@ -85,7 +80,6 @@ def main():
                         library_id = input("Enter the patron's 10 digit ID number: ")
                         if not re.search(r"\d{10}", library_id):
                             print("Invalid Library ID number.  The ID should be 10 digits in length.")
-                        # borrowed_books = () # is this how I can tie patrons to the books they borrow??
                         else:
                             patron_list.add_patron(LibraryPatron(name, library_id))
                             print(f"{name} has been added to the list of Library Patrons")
@@ -94,7 +88,7 @@ def main():
                         patron = patron_list.search_for_patron(name)
                         if patron:
                             print(f"Patron details: \nName: {name} \nLibrary ID: ******{patron.get_library_id()[6:]}"
-                                f"\nBorrowed Books: # Need to figure out how to list") # LIST BORROWED BOOKS
+                                f"\nBorrowed Books: {patron.list_borrowed_books()}") # LIST BORROWED BOOKS
                         else:
                             print(f"{name} was not found in the Patron List.")
                     elif patron_menu_option == '3':
