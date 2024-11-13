@@ -38,18 +38,16 @@ def main():
                         pub_date = input("Enter the publication year: ")
                         catalog.add_book_to_library(Books(title, author, genre, pub_date))
                         print(f"{title} has been added to the Library Catalog.")
-###################################################################################################################################
-                    elif book_menu_option == '2': # Borrow a book 
-                        borrower_name = input("Enter the name of the patron borrowing the book: ") #
+                    elif book_menu_option == '2':
+                        borrower_name = input("Enter the name of the patron borrowing the book: ") 
                         borrower = patron_list.search_for_patron(borrower_name)
                         if borrower:
                             title = input("Enter the title of the book to borrow: ")
-                            if catalog.checkout(title): # Checking if title is available to borrow
+                            if catalog.checkout(title): 
                                 borrower.borrow_book(title)
                                 print(f"{title} has been successfully borrowed by {borrower_name}")
                         else:
-                            print("This patron was not found in the library system.")
-###################################################################################################################################                                
+                            print("This patron was not found in the library system.")                               
                     elif book_menu_option == '3':
                         title = input("Enter the title of the book to return: ")
                         catalog.return_book(title)
@@ -88,7 +86,7 @@ def main():
                         patron = patron_list.search_for_patron(name)
                         if patron:
                             print(f"Patron details: \nName: {name} \nLibrary ID: ******{patron.get_library_id()[6:]}"
-                                f"\nBorrowed Books: {patron.list_borrowed_books()}") # LIST BORROWED BOOKS
+                                f"\nBorrowed Books: {patron.list_borrowed_books()}") 
                         else:
                             print(f"{name} was not found in the Patron List.")
                     elif patron_menu_option == '3':
